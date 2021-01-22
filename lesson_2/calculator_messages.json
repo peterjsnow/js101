@@ -1,0 +1,13 @@
+{
+  "en" : {
+    "welcome" : "Welcome to Calculator!",
+    "firstNum" : "What's the first number?",
+    "secondNum" : "What's the second number?",
+    "invalidNum" : "Hmm.. that doesn't look like a valid number.",
+    "operation" : "What operation would you like to perform?\n1) Add 2) Subtract 3) Multiply 4) Divide",
+    "invalidOperation" : "Please enter 1, 2, 3 or 4.",
+    "calculateAgain" : "Would you like to perform another calculation? (y/n)",
+    "invalidCalculateAgain" : "Please enter 'y' to perform another calculation, or 'n' to quit the program.",
+    "result" : "The result is:"
+  }
+}
