@@ -23,7 +23,6 @@ function getRandomIndex(arrLength) {
 }
 
 function getActionStr(winningChoice, losingChoice) {
-  
   let [losers, actions] = WIN_COND[winningChoice];
   return `${winningChoice} ${actions[losers.indexOf(losingChoice)]} ${losingChoice}`;
 }
@@ -41,7 +40,7 @@ while (true) {
   let gamesToPlay = Number(readline.question());
 
   while (gamesToPlay % 2 !== 1) {
-    prompt("Invalid - please choose an odd number of gamesToPlay to play, so that a winner may be found!");
+    prompt("Invalid - please choose an odd number of games to play, so that a winner may be found!");
     gamesToPlay = Number(readline.question());
   }
 
