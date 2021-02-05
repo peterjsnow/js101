@@ -12,10 +12,10 @@ function prompt(message) {
   console.log(`=> ${message}`);
 }
 
-function determineWinner(playerChoice, computerChoice) {
+function determineResult(playerChoice, computerChoice) {
   return WIN_COND[playerChoice][0].includes(computerChoice)
-    ? 'Player'
-    : 'Computer';
+    ? {winner: 'Player', loser: 'Computer'}
+    : {winner: 'Computer', loser: 'Player'}
 }
 
 function getRandomIndex(arrLength) {
@@ -32,11 +32,11 @@ function getScoreboardStr(played, games, score) {
   return `${'='.repeat(str.length)}\n${str}\n${'='.repeat(str.length)}`;
 }
 
-// Game logic
+// Match logic
 
 while (true) {
   prompt(`Let's play Rock Paper Scissors Lizard Spock!`);
-  prompt(`How many games would you like to play in a best of series?`);
+  prompt(`How many games would you like to play in a best-of match?`);
   let gamesToPlay = Number(readline.question());
 
   while (gamesToPlay % 2 !== 1) {
@@ -44,11 +44,12 @@ while (true) {
     gamesToPlay = Number(readline.question());
   }
 
-  let winner;
+  let result;
   let score = {Player : 0, Computer : 0};
+  let choices = {Player : '', Computer: ''};
   let gamesPlayed = 0;
 
-  // main game loop
+  // Game loop
   while (gamesPlayed <= gamesToPlay) {
     console.log(getScoreboardStr(gamesPlayed, gamesToPlay, score));
 
@@ -60,32 +61,29 @@ while (true) {
       choice = Number(readline.question() - 1);
     }
 
-    let playerChoice = VALID_CHOICES[choice];
-    prompt(`You choose: ${playerChoice}`);
+    choices['Player'] = VALID_CHOICES[choice];
+    prompt(`You choose: ${choices['Player']}`);
 
-    let computerChoice = VALID_CHOICES[getRandomIndex(VALID_CHOICES.length)];
-    prompt(`The computer chooses: ${computerChoice}!`);
+    choices['Computer'] = VALID_CHOICES[getRandomIndex(VALID_CHOICES.length)];
+    prompt(`The computer chooses: ${choices['Computer']}!`);
 
-    if (playerChoice === computerChoice) {
+    if (choices['Player'] === choices['Computer']) {
       prompt("It's a tie! Nobody wins this round, so we'll do it over.");
       continue;
     }
 
-    winner = determineWinner(playerChoice, computerChoice);
-    score[winner] += 1;
+    result = determineResult(choices['Player'], choices['Computer']);
+    score[result['winner']] += 1;
     gamesPlayed += 1;
 
+    prompt(`${result['winner']} wins Game ${gamesPlayed}: ${getActionStr(choices[result['winner']], choices[result['loser']])}!`);
 
-    let winningChoice = winner === 'Player' ? playerChoice : computerChoice;
-    let losingChoice = winner === 'Computer' ? playerChoice : computerChoice;
-    prompt(`${winner} wins Game ${gamesPlayed}: ${getActionStr(winningChoice, losingChoice)}!`);
-
-    if (score[winner] >= Math.ceil(gamesToPlay / 2)) {
+    if (score[result['winner']] >= Math.ceil(gamesToPlay / 2)) {
       break;
     }
   }
 
-  prompt(`Game over! ${winner === "Player" ? "Congratulations, you are" : winner + "is"} the winner!`);
+  prompt(`Game over! ${result['winner'] === "Player" ? "Congratulations, you are" : "Computer is"} the winner!`);
   prompt(`Final score: Computer: ${score['Computer']}, Player: ${score['Player']}`);
 
   prompt('Do you want to play again (y/n)?');
