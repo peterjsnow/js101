@@ -36,13 +36,14 @@ function getScoreboardStr(played, games, score) {
 
 while (true) {
   prompt(`Let's play Rock Paper Scissors Lizard Spock!`);
-  prompt(`How many games would you like to play in a best-of match?`);
+  prompt(`How many games would you like to play in a best-of match? (1, 3, 5, 7 ...)`);
   let gamesToPlay = Number(readline.question());
 
   while (gamesToPlay % 2 !== 1) {
     prompt("Invalid - please choose an odd number of games to play, so that a winner may be found!");
     gamesToPlay = Number(readline.question());
   }
+  console.clear();
 
   let result;
   let score = {Player : 0, Computer : 0};
@@ -60,15 +61,16 @@ while (true) {
       prompt("That's not a valid choice, please choose a number corresponding to the choice you want to make.");
       choice = Number(readline.question() - 1);
     }
+    console.clear();
 
     choices['Player'] = VALID_CHOICES[choice];
     prompt(`You choose: ${choices['Player']}`);
 
     choices['Computer'] = VALID_CHOICES[getRandomIndex(VALID_CHOICES.length)];
-    prompt(`The computer chooses: ${choices['Computer']}!`);
+    prompt(`The computer chooses: ${choices['Computer']}`);
 
     if (choices['Player'] === choices['Computer']) {
-      prompt("It's a tie! Nobody wins this round, so we'll do it over.");
+      prompt("It's a tie! Nobody wins this round, so we'll do it over.\n");
       continue;
     }
 
@@ -76,15 +78,15 @@ while (true) {
     score[result['winner']] += 1;
     gamesPlayed += 1;
 
-    prompt(`${result['winner']} wins Game ${gamesPlayed}: ${getActionStr(choices[result['winner']], choices[result['loser']])}!`);
+    prompt(`${result['winner']} wins Game ${gamesPlayed}: ${getActionStr(choices[result['winner']], choices[result['loser']])}!\n`);
 
     if (score[result['winner']] >= Math.ceil(gamesToPlay / 2)) {
       break;
     }
   }
 
-  prompt(`Game over! ${result['winner'] === "Player" ? "Congratulations, you are" : "Computer is"} the winner!`);
-  prompt(`Final score: Computer: ${score['Computer']}, Player: ${score['Player']}`);
+  prompt(`Game over! ${result['winner']} won ${score[result['winner']]} of ${gamesPlayed} games in a best of ${gamesToPlay}!`);
+  prompt(`${result['winner'] === "Player" ? "Congratulations, you won!" : "Better luck next time, Computer wins this one!"} \n`);
 
   prompt('Do you want to play again (y/n)?');
   let answer = readline.question().toLowerCase();
@@ -93,5 +95,6 @@ while (true) {
     answer = readline.question().toLowerCase();
   }
   if (answer[0] !== 'y') break;
+  console.clear();
 }
 
