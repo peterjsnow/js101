@@ -15,7 +15,7 @@ function prompt(message) {
 function determineResult(playerChoice, computerChoice) {
   return WIN_COND[playerChoice][0].includes(computerChoice)
     ? {winner: 'Player', loser: 'Computer'}
-    : {winner: 'Computer', loser: 'Player'}
+    : {winner: 'Computer', loser: 'Player'};
 }
 
 function getRandomIndex(arrLength) {
