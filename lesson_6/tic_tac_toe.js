@@ -126,7 +126,7 @@ function getWinner(marker, { human, minimax }) {
 // Minimax logic
 
 function computerChoosesSquare(board, players) {
-  return findBestMove(board, players);
+  return Number(findBestMove(board, players));
 }
 
 function findBestMove(board, players) {
@@ -195,7 +195,7 @@ function playerChoosesSquare(board) {
   let result = getValidInput(msg, input => {
     return emptySquares(board).includes(String(input - 1));
   });
-  return String(result - 1);
+  return Number(result - 1);
 }
 
 // Main game loop
