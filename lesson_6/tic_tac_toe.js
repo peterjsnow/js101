@@ -172,29 +172,29 @@ function getValidInput(msg, test, errorMsg) {
   prompt(msg);
 
   let result = readline.question();
-  if (!test(result)) return getValidInput(test, msg, "Sorry, input invalid - please make a valid choice.");
+  if (!test(result)) return getValidInput(msg, test, "Sorry, input invalid - please make a valid choice.");
 
   return result;
 }
 
 function chooseHumanMarker() {
   let msg = `Would you like to play as ${P1_MARKER} or ${P2_MARKER}? Enter your choice (${P1_MARKER}/${P2_MARKER})`;
-  let result = getValidInput(msg, input => {
+  let result = getValidInput(msg, (input => {
     return [P1_MARKER, P2_MARKER].includes(input.toUpperCase());
-  });
+  }));
   return result.toUpperCase();
 }
 
 function choosePlayAgain() {
   let msg = `Would you like to play again? (${CHOICES.join('/')})`;
-  return getValidInput(msg, input => CHOICES.includes(input));
+  return getValidInput(msg, (input => CHOICES.includes(input)));
 }
 
 function playerChoosesSquare(board) {
   let msg = `Choose a square (${joinOr(emptySquares(board).map(sq => Number(sq) + 1))}):`;
-  let result = getValidInput(msg, input => {
+  let result = getValidInput(msg, (input => {
     return emptySquares(board).includes(String(input - 1));
-  });
+  }));
   return Number(result - 1);
 }
 
