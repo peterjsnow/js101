@@ -221,8 +221,8 @@ while (true) {
 
   displayBoard(board, players);
 
-  let winner = getWinner(detectWinMarker(board), players);
-  if (winner) {
+  if (detectWinMarker(board)) {
+    let winner = getWinner(detectWinMarker(board), players);
     prompt(`Game over - ${winner.name} won the game!`);
   } else {
     prompt("Game over - it's a tie!");
